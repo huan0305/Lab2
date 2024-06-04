@@ -13,11 +13,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Lab 3'),
     );
   }
 }
@@ -42,32 +41,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-    void logIn() {
-
-    }
-  var imageSource = "images/question-mark.png";
-
-  late TextEditingController _loginController;
-  late TextEditingController _passwordController;
-
-  @override
-  void initState() {
-    super.initState();
-    _loginController = TextEditingController();
-    _passwordController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-  _loginController.dispose();
-  _passwordController.dispose();
-  super.dispose();
-  }
-
-  void buttonClicked() {
-
-  }
-
   @override
   Widget build(BuildContext context) {
 
@@ -80,36 +53,78 @@ class _MyHomePageState extends State<MyHomePage> {
 
         child: Column(
 
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            TextField(controller: _loginController,
-                decoration: InputDecoration(
-                    hintText:"Type here",
-                    border: OutlineInputBorder(),
-                    labelText: "Login"
-                )),
-            TextField(controller: _passwordController,
-                decoration: InputDecoration(
-                    hintText:"Type here",
-                    border: OutlineInputBorder(),
-                    labelText: "Password"
-                ),
-                obscureText:true,
+            Text(
+                'BROWSE CATEGORIES',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold
+                )
+            ),
+            Text(
+                "Not sure about exactly which recipe you're looking for? Do a search, or dive into our most popular categories.",
+                style: TextStyle(
+                  fontSize: 18
+                )
+            ),
+            Text(
+              "BY MEAT",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold
+              )
             ),
 
-            ElevatedButton(
-                onPressed: () {
-                  setState( () {
-                    if (_passwordController.text == "QWERTY123") {
-                      imageSource = "images/idea.png";
-                    } else {
-                      imageSource = "images/stop.png";
-                    }
-                  });
-                },
-                child: Text("Login"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Image.asset("images/beef.jpg", height: 100, width: 100),
+                Image.asset("images/chicken.jpg", height: 100, width: 100),
+                Image.asset("images/pork.jpg", height: 100, width: 100),
+                Image.asset("images/seafood.jpg", height: 100, width: 100),
+              ],
             ),
-            Image.asset(imageSource, width: 300, height: 300)
+
+            Text(
+                "BY COURSE",
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold
+                )
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Image.asset("images/maindish.jpg", height: 100, width: 100),
+                Image.asset("images/salad.jpg", height: 100, width: 100),
+                Image.asset("images/sidedish.jpg", height: 100, width: 100),
+                Image.asset("images/crockpot.jpg", height: 100, width: 100),
+              ],
+            ),
+
+            Text(
+                "BY DESSERT",
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold
+                )
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Image.asset("images/maindish.jpg", height: 100, width: 100),
+                Image.asset("images/salad.jpg", height: 100, width: 100),
+                Image.asset("images/sidedish.jpg", height: 100, width: 100),
+                Image.asset("images/crockpot.jpg", height: 100, width: 100),
+              ],
+            ),
+
+
+
+
           ],
         ),
       ),
