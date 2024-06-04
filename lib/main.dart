@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
         child: Column(
 
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
                 'BROWSE CATEGORIES',
@@ -84,21 +84,84 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage("images/beef.jpg"),
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage("images/beef.jpg"),
+                        child: Align(
+                          alignment: AlignmentDirectional.center,
+                          child: Text(
+                            "BEEF",
+                            style: TextStyle(
+                            color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18
+                            )
+                          ),
+                        ),
+                    ),
+                  ],
                 ),
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage("images/chicken.jpg"),
+
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage("images/chicken.jpg"),
+                      child: Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Text(
+                            "CHICKEN",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18
+                            )
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage("images/pork.jpg"),
+
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage("images/pork.jpg"),
+                      child: Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Text(
+                            "PORK",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18
+                            )
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage("images/seafood.jpg"),
+
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage("images/seafood.jpg"),
+                      child: Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Text(
+                            "SEAFOOD",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18
+                            )
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -114,21 +177,84 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage("images/maindish.jpg"),
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage("images/maindish.jpg"),
+                      child: Align(
+                        alignment: AlignmentDirectional.bottomCenter,
+                        child: Text(
+                            "MAIN DISHES",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18
+                            )
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage("images/salad.jpg"),
+
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage("images/salad.jpg"),
+                      child: Align(
+                        alignment: AlignmentDirectional.bottomCenter,
+                        child: Text(
+                            "SALADS",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18
+                            )
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage("images/sidedish.jpg"),
+
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage("images/sidedish.jpg"),
+                      child: Align(
+                        alignment: AlignmentDirectional.bottomCenter,
+                        child: Text(
+                            "SIDE DISHES",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18
+                            )
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage("images/crockpot.jpg"),
+
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage("images/crockpot.jpg"),
+                      child: Align(
+                        alignment: AlignmentDirectional.bottomCenter,
+                        child: Text(
+                            "CROCKPOT",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18
+                            )
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -144,21 +270,84 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage("images/icecream.jpg"),
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage("images/icecream.jpg"),
+                      child: Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Text(
+                            "ICE CREAM",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18
+                            )
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage("images/brownies.jpg"),
+
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage("images/brownies.jpg"),
+                      child: Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Text(
+                            "BROWNIES",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18
+                            )
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage("images/pies.jpg"),
+
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage("images/pies.jpg"),
+                      child: Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Text(
+                            "PIES",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18
+                            )
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage("images/cookies.jpg"),
+
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage("images/cookies.jpg"),
+                      child: Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Text(
+                            "COOKIES",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18
+                            )
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
