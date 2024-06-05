@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+// Notes: may need 4-5 functions, 1 for save, load, clear, store, (possible 1 more)
+// Prof said use encrypted for this lab, should not use shared.
+// Shared preferences can see file, encrypted cannot.
+
 void main() {
   runApp(const MyApp());
 }
@@ -13,10 +17,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Lab 3'),
+      home: const MyHomePage(title: 'Lab 4'),
     );
   }
 }
@@ -32,6 +37,41 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  void logIn() {
+
+  }
+  var imageSource = "images/question-mark.png";
+
+  late TextEditingController _loginController;
+  late TextEditingController _passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    _loginController = TextEditingController();
+    _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _loginController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void buttonClicked() {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('AlertDialog Title'),
+        content: const Text('AlertDialog description'),
+        actions: <Widget>[
+          ElevatedButton(onPressed: onPressed, child: child)
+          ],
+
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -44,304 +84,36 @@ class _MyHomePageState extends State<MyHomePage> {
 
         child: Column(
 
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-                'BROWSE CATEGORIES',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold
-                )
-            ),
-
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                  "Not sure about exactly which recipe you're looking for? Do a search, or dive into our most popular categories.",
-                  style: TextStyle(
-                      fontSize: 18
-                  )
+            TextField(controller: _loginController,
+                decoration: InputDecoration(
+                    hintText:"Type here",
+                    border: OutlineInputBorder(),
+                    labelText: "Login"
+                )),
+            TextField(controller: _passwordController,
+              decoration: InputDecoration(
+                  hintText:"Type here",
+                  border: OutlineInputBorder(),
+                  labelText: "Password"
               ),
+              obscureText:true,
             ),
 
-            Text(
-              "BY MEAT",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold
-              )
+            ElevatedButton(
+              onPressed: buttonClicked
+              //   setState( () {
+              //     if (_passwordController.text == "QWERTY123") {
+              //       imageSource = "images/idea.png";
+              //     } else {
+              //       imageSource = "images/stop.png";
+              //     }
+              //   });
+              ,
+              child: Text("Login"),
             ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage("images/beef.jpg"),
-                        child: Align(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(
-                            "BEEF",
-                            style: TextStyle(
-                            color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18
-                            )
-                          ),
-                        ),
-                    ),
-                  ],
-                ),
-
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage("images/chicken.jpg"),
-                      child: Align(
-                        alignment: AlignmentDirectional.center,
-                        child: Text(
-                            "CHICKEN",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18
-                            )
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage("images/pork.jpg"),
-                      child: Align(
-                        alignment: AlignmentDirectional.center,
-                        child: Text(
-                            "PORK",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18
-                            )
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage("images/seafood.jpg"),
-                      child: Align(
-                        alignment: AlignmentDirectional.center,
-                        child: Text(
-                            "SEAFOOD",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18
-                            )
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-
-            Text(
-                "BY COURSE",
-                style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold
-                )
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage("images/maindish.jpg"),
-                      child: Align(
-                        alignment: AlignmentDirectional.bottomCenter,
-                        child: Text(
-                            "MAIN DISHES",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18
-                            )
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage("images/salad.jpg"),
-                      child: Align(
-                        alignment: AlignmentDirectional.bottomCenter,
-                        child: Text(
-                            "SALADS",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18
-                            )
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage("images/sidedish.jpg"),
-                      child: Align(
-                        alignment: AlignmentDirectional.bottomCenter,
-                        child: Text(
-                            "SIDE DISHES",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18
-                            )
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage("images/crockpot.jpg"),
-                      child: Align(
-                        alignment: AlignmentDirectional.bottomCenter,
-                        child: Text(
-                            "CROCKPOT",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18
-                            )
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-
-            Text(
-                "BY DESSERT",
-                style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold
-                )
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage("images/icecream.jpg"),
-                      child: Align(
-                        alignment: AlignmentDirectional.center,
-                        child: Text(
-                            "ICE CREAM",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18
-                            )
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage("images/brownies.jpg"),
-                      child: Align(
-                        alignment: AlignmentDirectional.center,
-                        child: Text(
-                            "BROWNIES",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18
-                            )
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage("images/pies.jpg"),
-                      child: Align(
-                        alignment: AlignmentDirectional.center,
-                        child: Text(
-                            "PIES",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18
-                            )
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage("images/cookies.jpg"),
-                      child: Align(
-                        alignment: AlignmentDirectional.center,
-                        child: Text(
-                            "COOKIES",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18
-                            )
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            Image.asset(imageSource, width: 300, height: 300)
           ],
         ),
       ),
