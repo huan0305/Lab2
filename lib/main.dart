@@ -46,6 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late TextEditingController _loginController;
   late TextEditingController _passwordController;
 
+  // Lab 4 - declaring EncryptedSharedPreferences variable.
   late EncryptedSharedPreferences storedData;
 
   @override
@@ -54,11 +55,32 @@ class _MyHomePageState extends State<MyHomePage> {
     _loginController = TextEditingController();
     _passwordController = TextEditingController();
 
+    // Lab 4 - Instantiating EncryptedSharedPreferences object.
     storedData = EncryptedSharedPreferences();
 
+    // Lab 4 - Retrieving values for UserName and Password and autofilling them.
     storedData.getString("UserName").then((storedUserName) {
       if (storedUserName != null) {
         _loginController.text = storedUserName;
+      }
+
+      // Check after setting the user name
+      if (_loginController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
+        // Snackbar loads if login and password are not empty.
+        var snackBar = SnackBar(
+            content: Text('Previous login name and password loaded.'),
+            // Snackbar button clears data from EncryptedSharedPreferences.
+            action: SnackBarAction(label: "Clear saved data",
+              onPressed: () {
+                storedData.remove("UserName");
+                storedData.remove("Password");
+                // Resets fields to empty string.
+                _loginController.text = "";
+                _passwordController.text = "";
+              },
+            )
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     });
 
@@ -77,6 +99,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void buttonClicked() {
+    setState( () {
+      if (_passwordController.text == "QWERTY123") {
+        imageSource = "images/idea.png";
+      } else {
+        imageSource = "images/stop.png";
+      }
+    });
     showDialog<String>(
       context: context,
       builder: (BuildContext context) =>
@@ -84,23 +113,35 @@ class _MyHomePageState extends State<MyHomePage> {
             title: const Text('Login'),
             content: const Text('Would you like to save your username and password?'),
             actions: <Widget>[
-              ElevatedButton(child: Text("Save"), onPressed: () {
-                var userName = _loginController.value.text;
-                var userPassword = _passwordController.value.text;
+              ElevatedButton(child: Text("Save"),
+                  onPressed: () {
+                    var userName = _loginController.value.text;
+                    var userPassword = _passwordController.value.text;
 
-                storedData.setString("UserName", userName);
-                storedData.setString("Password", userPassword);
+                    // Lab 4 - Storing username and password in encrypted shared preferences.
+                    storedData.setString("UserName", userName);
+                    storedData.setString("Password", userPassword);
 
-                Navigator.pop(context);
-              } ),
-              FilledButton(onPressed: () {Navigator.pop(context);}, child: Text("Cancel"))
+                    Navigator.pop(context);
+                  }
+                  ),
+              FilledButton(child: Text("Cancel"),
+                onPressed: () {
+                  storedData.remove("UserName");
+                  storedData.remove("Password");
+                  // Resets fields to empty string.
+                  _loginController.text = "";
+                  _passwordController.text = "";
+                  Navigator.pop(context);
+                },
+                )
             ],
           )
     );
   }
 
 
-
+  // This is the page layout.
   @override
   Widget build(BuildContext context) {
 
@@ -131,16 +172,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
 
             ElevatedButton(
-              onPressed: buttonClicked
-              //   setState( () {
-              //     if (_passwordController.text == "QWERTY123") {
-              //       imageSource = "images/idea.png";
-              //     } else {
-              //       imageSource = "images/stop.png";
-              //     }
-              //   });
-              ,
-              child: Text("Login"),
+                child: Text("Login"),
+                onPressed: buttonClicked
+
             ),
             Image.asset(imageSource, width: 300, height: 300)
           ],
