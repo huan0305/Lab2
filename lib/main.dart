@@ -63,10 +63,11 @@ class _MyHomePageState extends State<MyHomePage> {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('AlertDialog Title'),
-        content: const Text('AlertDialog description'),
+        title: const Text('Login'),
+        content: const Text('Would you like to save your username and password?'),
         actions: <Widget>[
-          ElevatedButton(onPressed: onPressed, child: child)
+          ElevatedButton(onPressed: () {}, child: Text("Save")),
+          FilledButton(onPressed: () {Navigator.pop(context);}, child: Text("Cancel"))
           ],
 
     ));
