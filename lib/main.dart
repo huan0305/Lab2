@@ -1,3 +1,4 @@
+import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 // Notes: may need 4-5 functions, 1 for save, load, clear, store, (possible 1 more)
@@ -45,11 +46,27 @@ class _MyHomePageState extends State<MyHomePage> {
   late TextEditingController _loginController;
   late TextEditingController _passwordController;
 
+  late EncryptedSharedPreferences storedData;
+
   @override
   void initState() {
     super.initState();
     _loginController = TextEditingController();
     _passwordController = TextEditingController();
+
+    storedData = EncryptedSharedPreferences();
+
+    storedData.getString("UserName").then((storedUserName) {
+      if (storedUserName != null) {
+        _loginController.text = storedUserName;
+      }
+    });
+
+    storedData.getString("Password").then((storedPassword) {
+      if (storedPassword != null) {
+        _passwordController.text = storedPassword;
+      }
+    });
   }
 
   @override
@@ -62,16 +79,27 @@ class _MyHomePageState extends State<MyHomePage> {
   void buttonClicked() {
     showDialog<String>(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('Login'),
-        content: const Text('Would you like to save your username and password?'),
-        actions: <Widget>[
-          ElevatedButton(onPressed: () {}, child: Text("Save")),
-          FilledButton(onPressed: () {Navigator.pop(context);}, child: Text("Cancel"))
-          ],
+      builder: (BuildContext context) =>
+          AlertDialog(
+            title: const Text('Login'),
+            content: const Text('Would you like to save your username and password?'),
+            actions: <Widget>[
+              ElevatedButton(child: Text("Save"), onPressed: () {
+                var userName = _loginController.value.text;
+                var userPassword = _passwordController.value.text;
 
-    ));
+                storedData.setString("UserName", userName);
+                storedData.setString("Password", userPassword);
+
+                Navigator.pop(context);
+              } ),
+              FilledButton(onPressed: () {Navigator.pop(context);}, child: Text("Cancel"))
+            ],
+          )
+    );
   }
+
+
 
   @override
   Widget build(BuildContext context) {
