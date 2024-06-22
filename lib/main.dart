@@ -1,9 +1,8 @@
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
+import 'DataRepository.dart';
+import 'ProfilePage.dart';
 
-// Notes: may need 4-5 functions, 1 for save, load, clear, store, (possible 1 more)
-// Prof said use encrypted for this lab, should not use shared.
-// Shared preferences can see file, encrypted cannot.
 
 void main() {
   runApp(const MyApp());
@@ -16,13 +15,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/pageOne' : (context) => MyHomePage(title: 'Lab 5'),
+        '/pageTwo' : (context) => ProfilePage()
+      },
       title: 'Flutter Demo',
       theme: ThemeData(
 
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Lab 4'),
+      home: const MyHomePage(title: 'Lab 5'),
     );
   }
 }
@@ -102,6 +105,10 @@ class _MyHomePageState extends State<MyHomePage> {
     setState( () {
       if (_passwordController.text == "QWERTY123") {
         imageSource = "images/idea.png";
+
+        // Lab 5 - setting login value to data repository.
+        DataRepository.setLogin(_loginController.text);
+        Navigator.pushNamed(context, "/pageTwo"); // if password is correct, move to page 2.
       } else {
         imageSource = "images/stop.png";
       }
@@ -129,9 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   storedData.remove("UserName");
                   storedData.remove("Password");
-                  // Resets fields to empty string.
-                  _loginController.text = "";
-                  _passwordController.text = "";
+
                   Navigator.pop(context);
                 },
                 )
