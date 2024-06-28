@@ -17,23 +17,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Lab 6'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -42,30 +32,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-    void logIn() {
+  late TextEditingController _controller;
+  List<String> listObjects = [];
 
-    }
-  var imageSource = "images/question-mark.png";
-
-  late TextEditingController _loginController;
-  late TextEditingController _passwordController;
 
   @override
   void initState() {
     super.initState();
-    _loginController = TextEditingController();
-    _passwordController = TextEditingController();
+    _controller = TextEditingController();
   }
 
   @override
   void dispose() {
-  _loginController.dispose();
-  _passwordController.dispose();
+  _controller.dispose();
   super.dispose();
-  }
-
-  void buttonClicked() {
-
   }
 
   @override
@@ -77,42 +57,73 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
+        child: Column(children: [
+          //ADD ROW
+          Row(children: [
+            ElevatedButton(child: Text("Add"), onPressed: () {
+              var userTyped = _controller.value.text;
+              //setting state of GUI
+              setState(() {
+                listObjects.add(userTyped);
+                _controller.text = "";
+              });
+            }),
 
-        child: Column(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(controller: _loginController,
+            Expanded(child:
+              TextField(controller: _controller,
                 decoration: InputDecoration(
-                    hintText:"Type here",
-                    border: OutlineInputBorder(),
-                    labelText: "Login"
-                )),
-            TextField(controller: _passwordController,
-                decoration: InputDecoration(
-                    hintText:"Type here",
-                    border: OutlineInputBorder(),
-                    labelText: "Password"
+                  hintText: "Type Here",
+                  border: OutlineInputBorder(),
+                  labelText: "Enter a todo item"
                 ),
-                obscureText:true,
-            ),
+              )
+            )
+          ]),
 
-            ElevatedButton(
-                onPressed: () {
-                  setState( () {
-                    if (_passwordController.text == "QWERTY123") {
-                      imageSource = "images/idea.png";
-                    } else {
-                      imageSource = "images/stop.png";
-                    }
-                  });
+          //ITEM LIST
+          // If the list is empty, it notifies the user.
+          if(listObjects.isEmpty)
+            Text("There are no items in the list.")
+          else
+          Expanded( child:
+              ListView.builder(
+                itemCount: listObjects.length,
+                itemBuilder: (context, rowNumber) {
+                  return
+                      GestureDetector(child:
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text("Row number: ${rowNumber}"),
+                              Text(listObjects[rowNumber]),
+                        ]),
+                        //Alert dialog launched on long press of row.
+                        onLongPress: () {
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Delete Item'),
+                              content: const Text('Do you want to delete the item?'),
+                              actions: <Widget>[
+                                //Yes button deletes object and closes alert dialog.
+                                ElevatedButton(child: Text("Yes"), onPressed: () {
+                                  setState(() {
+                                    listObjects.removeAt(rowNumber);
+                                    Navigator.pop(context);
+                                  });
+                                }),
+                                //No button closes alert dialog only.
+                                OutlinedButton(child: Text("No"), onPressed: () {
+                                  Navigator.pop(context);
+                                })
+                              ],
+                            ),
+                          );
+                        },
+                      );
                 },
-                child: Text("Login"),
-            ),
-            Image.asset(imageSource, width: 300, height: 300)
-          ],
-        ),
-      ),
-    );
+              )
+          )
+      ]),
+    ));
   }
 }
