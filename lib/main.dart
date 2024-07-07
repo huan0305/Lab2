@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lab2/ToDoDatabase.dart';
+
+import 'ToDoDAO.dart';
+import 'ToDoItem.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,12 +37,26 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   late TextEditingController _controller;
-  List<String> listObjects = [];
-
+  // declared an array of ToDoItems
+  var listObjects = <ToDoItem>[];
+  // declared a DAO.
+  late ToDoDAO myDAO;
 
   @override
   void initState() {
     super.initState();
+
+    // Initializing database
+    $FloorToDoDatabase.databaseBuilder('app_database.db').build().then((database) {
+      myDAO = database.getDao;
+
+      // getting all items from database and storing in listObjects array.
+      myDAO.getAllItems().then ((listOfItems){
+        setState(() {
+          listObjects.addAll(listOfItems);
+        });
+      });
+    });
     _controller = TextEditingController();
   }
 
@@ -64,7 +82,10 @@ class _MyHomePageState extends State<MyHomePage> {
               var userTyped = _controller.value.text;
               //setting state of GUI
               setState(() {
-                listObjects.add(userTyped);
+                var newItem = ToDoItem(ToDoItem.ID, userTyped);
+                //adding new ToDOItem to database.
+                listObjects.add(newItem);
+                myDAO.insertItem(newItem);
                 _controller.text = "";
               });
             }),
@@ -94,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text("Row number: ${rowNumber}"),
-                              Text(listObjects[rowNumber]),
+                              Text(listObjects[rowNumber].message),
                         ]),
                         //Alert dialog launched on long press of row.
                         onLongPress: () {
@@ -107,6 +128,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                 //Yes button deletes object and closes alert dialog.
                                 ElevatedButton(child: Text("Yes"), onPressed: () {
                                   setState(() {
+                                    var itm = listObjects[rowNumber];
+                                    // deletes item from database.
+                                    myDAO.deleteItem(itm);
+                                    // removes from listObjects array.
                                     listObjects.removeAt(rowNumber);
                                     Navigator.pop(context);
                                   });
